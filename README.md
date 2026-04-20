@@ -171,11 +171,6 @@ python phase2b_run_v3.py   # rebuilds all features from raw files
 
 ---
 
-## 🏛️ Academic Context
-
-**Course:** BIA-660 Web Mining  
-**Institution:** Stevens Institute of Technology  
-**Semester:** Spring 2026  
 
 **Research Question:**
 > *What structural drug characteristics — acquisition cost, shortage history, adverse event burden, and clinical trial activity — predict patient-reported satisfaction with prescription medications?*
