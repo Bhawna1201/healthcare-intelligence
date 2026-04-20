@@ -786,17 +786,17 @@ elif page == "💰 Drug Pricing":
         
 
     with tab2:
-        if "dosage" in df.columns:
-            form_prices = (gen.groupby("dosage")["price"]
+        if "dosage_form" in df.columns:
+            form_prices = (gen.groupby("dosage_form")["price"]
                            .agg(median="median",count="count")
                            .query("count>=5")
                            .reset_index()
                            .sort_values("median",ascending=False))
             form_prices["cost_30"] = form_prices["median"]*30
-            fig = px.bar(form_prices, x="dosage", y="cost_30",
+            fig = px.bar(form_prices, x="dosage_form", y="cost_30",
                 color="cost_30", color_continuous_scale=[[0,P_GREEN],[1,MAR]],
                 title="Average 30-Day Cost by Dosage Form",
-                labels={"dosage":"Dosage Form","cost_30":"Avg 30-Day Cost ($)"})
+                labels={"dosage_form":"Dosage Form","cost_30":"Avg 30-Day Cost ($)"})
             fig.update_layout(**PT, height=400, coloraxis_showscale=False,
                 xaxis_tickangle=-30, margin=dict(l=40,r=20,t=50,b=100))
             st.plotly_chart(fig, use_container_width=True)
@@ -952,7 +952,7 @@ elif page == "⚠️ Drug Shortages":
             with c2:
                 st.markdown(f"**Shortage Details**")
                 show_cols = [c for c in ["drug_canonical","shortage_reason","status",
-                                          "dosage","start_date"]
+                                          "dosage_form","start_date"]
                              if c in matched.columns]
                 disp = (matched[show_cols].drop_duplicates(subset=["drug_canonical"])
                         .sort_values("drug_canonical"))
@@ -980,8 +980,8 @@ elif page == "⚠️ Drug Shortages":
             st.plotly_chart(fig, use_container_width=True)
 
     with tab2:
-        if "dosage" in df_raw.columns:
-            fc = (df_raw["dosage"].replace("","Unknown")
+        if "dosage_form" in df_raw.columns:
+            fc = (df_raw["dosage_form"].replace("","Unknown")
                   .value_counts().head(12).reset_index())
             fc.columns = ["form","count"]
             c1,c2 = st.columns(2)
