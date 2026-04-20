@@ -1,0 +1,10 @@
+Phase 1 Scraping Report
+Run at: 2026-03-09 13:14:08.347649
+Drugs: 3
+
+ClinicalTrials.gov: {'written': 0, 'skipped': 0, 'file': '/Users/sandeep/Documents/3rd sem/healthcare_intelligence/data/raw/trials.csv'}
+FDA Shortages: {'written': 1677, 'file': '/Users/sandeep/Documents/3rd sem/healthcare_intelligence/data/raw/shortages.csv', 'size_kb': 1445.4}
+WebMD Reviews: {'written': 0, 'skipped': 3, 'file': '/Users/sandeep/Documents/3rd sem/healthcare_intelligence/data/raw/reviews.csv', 'size_kb': 1535.8}
+GoodRx Prices: {'error': "run() got an unexpected keyword argument 'use_selenium'"}
+OpenFDA Adverse Events: {'written': 0, 'skipped': 0, 'file': '/Users/sandeep/Documents/3rd sem/healthcare_intelligence/data/raw/adverse_events.csv'}
+PubMed Abstracts: {'written': 0, 'skipped': 0, 'file': '/Users/sandeep/Documents/3rd sem/healthcare_intelligence/data/raw/pubmed_abstracts.csv'}

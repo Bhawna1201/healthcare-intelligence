@@ -1,0 +1,10 @@
+Phase 1 Scraping Report
+Run at: 2026-03-09 13:19:17.482006
+Drugs: 50
+
+ClinicalTrials.gov: {'written': 0, 'skipped': 0, 'file': '/Users/sandeep/Documents/3rd sem/healthcare_intelligence/data/raw/trials.csv'}
+FDA Shortages: {'written': 1677, 'file': '/Users/sandeep/Documents/3rd sem/healthcare_intelligence/data/raw/shortages.csv', 'size_kb': 2266.0}
+WebMD Reviews: {'written': 0, 'skipped': 50, 'file': '/Users/sandeep/Documents/3rd sem/healthcare_intelligence/data/raw/reviews.csv', 'size_kb': 1535.8}
+NADAC Prices: {'written': 0, 'skipped': 50, 'file': '/Users/sandeep/Documents/3rd sem/healthcare_intelligence/data/raw/prices.csv', 'size_kb': 13298.9}
+OpenFDA Adverse Events: {'written': 0, 'skipped': 0, 'file': '/Users/sandeep/Documents/3rd sem/healthcare_intelligence/data/raw/adverse_events.csv'}
+PubMed Abstracts: {'written': 0, 'skipped': 0, 'file': '/Users/sandeep/Documents/3rd sem/healthcare_intelligence/data/raw/pubmed_abstracts.csv'}

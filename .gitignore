@@ -1,0 +1,49 @@
+# Virtual environment
+venv/
+env/
+.env
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Raw scraped data (too large for GitHub — re-scrape locally)
+data/raw/*.csv
+data/raw/*.json
+data/processed/*.csv
+
+# Keep master feature matrices (small, needed for dashboard)
+!data/master/*.csv
+!data/master/*.png
+
+# Logs and checkpoints
+logs/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Environment variables
+.env
+.env.local
+
+# Streamlit secrets
+.streamlit/secrets.toml
+
+# Large model files
+*.model
+*.bin
+word2vec_*.model*

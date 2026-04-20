@@ -1,0 +1,106 @@
+# Step 1 — check how many reviews each drug actually has
+venv/bin/python -c "
+import pandas as pd
+df = pd.read_csv('data/raw/reviews.csv', on_bad_lines='skip', engine='python')
+dc = 'drug_name_clean' if 'drug_name_clean' in df.columns else 'drug_name'
+counts = df.groupby(dc).size().sort_values()
+print(f'Total reviews: {len(df)}')
+print(f'Drugs with reviews: {df[dc].nunique()}')
+print()
+print('Review counts per drug:')
+print(counts.to_string())
+"
+
+venv/bin/python -c "
+import json
+from pathlib import Path
+
+HAS_REVIEWS = ['metformin','cyclobenzaprine','lisinopril','naproxen','acetaminophen',
+               'furosemide','clopidogrel','pantoprazole','alprazolam','clonazepam',
+               'tamsulosin','montelukast','zolpidem','amlodipine','escitalopram','sertraline']
+
+path = Path('logs/checkpoints/webmd_reviews.json')
+path.write_text(json.dumps({'done': HAS_REVIEWS}, indent=2))
+print('Checkpoint reset — keeping', len(HAS_REVIEWS), 'done')
+print('34 drugs will be re-scraped')
+"
+
+venv/bin/python phase2b_run_v2.py. ( show r2 values)
+********************
+check all tables for drugs 50 
+venv/bin/python -c "
+import pandas as pd
+from pathlib import Path
+
+TARGET = ['metformin','lisinopril','atorvastatin','levothyroxine','amlodipine',
+          'metoprolol','omeprazole','simvastatin','losartan','albuterol',
+          'gabapentin','hydrochlorothiazide','sertraline','montelukast',
+          'furosemide','pantoprazole','escitalopram','rosuvastatin',
+          'bupropion','fluoxetine','clopidogrel','tramadol','cyclobenzaprine',
+          'amoxicillin','azithromycin','doxycycline','prednisone',
+          'methylprednisolone','clonazepam','alprazolam','zolpidem',
+          'oxycodone','hydrocodone','acetaminophen','ibuprofen','naproxen',
+          'insulin glargine','insulin lispro','empagliflozin','semaglutide',
+          'dulaglutide','apixaban','rivaroxaban','warfarin','digoxin',
+          'diltiazem','verapamil','carvedilol','spironolactone','tamsulosin']
+
+files = {
+    'reviews':   ('data/raw/reviews.csv',   'exact'),
+    'prices':    ('data/raw/prices.csv',    'exact'),
+    'trials':    ('data/raw/trials.csv',    'exact'),
+    'shortages': ('data/raw/shortages.csv', 'substring'),
+    'adverse':   ('data/raw/adverse_events.csv', 'exact'),
+    'pubmed':    ('data/raw/pubmed_abstracts.csv', 'exact'),
+}
+
+print(f\"{'Source':<12} {'Rows':>8} {'Match':>8}  Missing\")
+print('-'*70)
+
+for name, (path, match_type) in files.items():
+    if not Path(path).exists():
+        print(f'  {name:<12} FILE NOT FOUND')
+        continue
+    df = pd.read_csv(path, on_bad_lines='skip', engine='python')
+    dc = 'drug_name_clean' if 'drug_name_clean' in df.columns else 'drug_name'
+
+    if match_type == 'exact':
+        found   = set(df[dc].str.lower().str.strip().dropna().unique())
+        matched = [d for d in TARGET if d in found]
+        missing = [d for d in TARGET if d not in found]
+    else:
+        # Substring match for shortage table
+        all_text = df[dc].str.lower().str.strip().dropna().tolist()
+        matched  = [d for d in TARGET if any(d in row for row in all_text)]
+        missing  = [d for d in TARGET if not any(d in row for row in all_text)]
+
+    status = '✓' if len(matched)==50 else '!'
+    miss_str = str(missing[:3]) + ('...' if len(missing)>3 else '') if missing else 'none'
+    print(f'  {status} {name:<10} {len(df):>8,} {len(matched):>5}/50  missing: {miss_str}')
+
+print()
+print('Note: shortages uses substring match (drug names are full descriptions)')
+print('      0 shortage records for a drug = correct (common generics rarely shortage)')
+"
+
+
+***************************
+ Feature                              Pearson r  Spearman r   p-value  Significance
+  --------------------------------------------------------------------------------
+  Drug Price (30-day generic)            -0.2210     -0.1263    0.3822  n.s.
+  Price Variability (competition)         0.2292      0.2095    0.1443  n.s.
+  Total Shortage History                 -0.0085     -0.1309    0.3649  n.s.
+  Currently in Shortage                  -0.0908     -0.1358    0.3471  n.s.
+  Adverse Event Diversity                -0.0533     -0.0188    0.8970  n.s.
+  Trial Completion Rate                   0.0940      0.1124    0.4373  n.s.
+  Clinical Trial Volume                  -0.1769     -0.0568    0.6950  n.s.
+  Generic Available                       0.1301      0.1533    0.2880  n.s.
+  Recent Research Ratio                  -0.1952     -0.0939    0.5165  n.s.
+  Adverse Event Volume                   -0.0327      0.0263    0.8563  n.s.
+
+TOP FINDINGS:
+  Most negative drug : losartan (-0.673)
+  Most positive drug : gabapentin (0.232)
+  Mean satisfaction  : -0.185
+  Most expensive     : insulin lispro ($305.88/30-day)
+  Most shortage-prone: furosemide (20 records)
+(venv) sandeep@Sandeeps-Air healthcare_intelligence % 

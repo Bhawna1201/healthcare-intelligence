@@ -1,0 +1,39 @@
+# Healthcare Intelligence Platform — BIA-660 Web Mining
+# Stevens Institute of Technology
+# Install: pip install -r requirements.txt
+
+# Dashboard
+streamlit==1.32.0
+plotly==5.19.0
+
+# Data processing
+pandas==2.2.0
+numpy==1.26.4
+scipy==1.12.0
+
+# Machine learning
+scikit-learn==1.4.0
+
+# NLP
+vaderSentiment==3.3.2
+textblob==0.18.0
+nltk==3.8.1
+gensim==4.3.2
+
+# Web scraping
+selenium==4.18.1
+requests==2.31.0
+beautifulsoup4==4.12.3
+lxml==5.1.0
+
+# API clients
+sodapy==2.2.0
+
+# Visualization (report figures)
+matplotlib==3.8.2
+Pillow==10.2.0
+
+# Utilities
+python-dotenv==1.0.1
+tqdm==4.66.2
+rapidfuzz==3.6.1

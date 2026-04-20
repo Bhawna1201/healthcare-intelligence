@@ -1,0 +1,10 @@
+Phase 1 Scraping Report
+Run at: 2026-03-02 15:29:38.172487
+Drugs: 50
+
+ClinicalTrials.gov: {'written': 0, 'skipped': 0, 'file': '/Users/sandeep/Documents/3rd sem/healthcare_intelligence/data/raw/trials.csv'}
+FDA Shortages: {'written': 0, 'skipped': 0, 'file': '/Users/sandeep/Documents/3rd sem/healthcare_intelligence/data/raw/shortages.csv'}
+Drugs.com Reviews: {'written': 0, 'skipped': 0, 'file': '/Users/sandeep/Documents/3rd sem/healthcare_intelligence/data/raw/reviews.csv'}
+GoodRx Prices: {'written': 0, 'skipped': 0, 'file': '/Users/sandeep/Documents/3rd sem/healthcare_intelligence/data/raw/prices.csv'}
+OpenFDA Adverse Events: {'written': 23500, 'skipped': 0, 'file': '/Users/sandeep/Documents/3rd sem/healthcare_intelligence/data/raw/adverse_events.csv'}
+PubMed Abstracts: {'written': 7031, 'skipped': 0, 'file': '/Users/sandeep/Documents/3rd sem/healthcare_intelligence/data/raw/pubmed_abstracts.csv'}
