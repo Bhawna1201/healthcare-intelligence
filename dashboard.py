@@ -786,25 +786,51 @@ elif page == "💰 Drug Pricing":
         
 
     with tab2:
-        if "dosage_form" in df.columns:
-            form_prices = (gen.groupby("dosage_form")["price"]
-                           .agg(median="median",count="count")
-                           .query("count>=5")
-                           .reset_index()
-                           .sort_values("median",ascending=False))
-            form_prices["cost_30"] = form_prices["median"]*30
-            fig = px.bar(form_prices, x="dosage_form", y="cost_30",
+        # if "dosage_form" in df.columns:
+        #     form_prices = (gen.groupby("dosage_form")["price"]
+        #                    .agg(median="median",count="count")
+        #                    .query("count>=5")
+        #                    .reset_index()
+        #                    .sort_values("median",ascending=False))
+        #     form_prices["cost_30"] = form_prices["median"]*30
+        #     fig = px.bar(form_prices, x="dosage_form", y="cost_30",
+        #         color="cost_30", color_continuous_scale=[[0,P_GREEN],[1,MAR]],
+        #         title="Average 30-Day Cost by Dosage Form",
+        #         labels={"dosage_form":"Dosage Form","cost_30":"Avg 30-Day Cost ($)"})
+        #     fig.update_layout(**PT, height=400, coloraxis_showscale=False,
+        #         xaxis_tickangle=-30, margin=dict(l=40,r=20,t=50,b=100))
+        #     st.plotly_chart(fig, use_container_width=True)
+        
+        #     st.markdown(info_box("Why do forms cost differently?",
+        #         "Injectable drugs require sterile manufacturing, cold chain logistics, and "
+        #         "specialized equipment — driving much higher costs than tablets. Solutions and "
+        #         "capsules fall between. This explains why insulin (injection) costs 100× more "
+        #         "per dose than metformin (tablet) even after controlling for molecule complexity.",
+        #         C_AMBER, P_AMBER), unsafe_allow_html=True)
+        # else:
+        #     st.info("Dosage form data not available in current dataset.")
+        if "dosage" in df.columns:
+            gen = gen.copy()
+            gen["dosage_type"] = gen["dosage"].str.extract(
+                r'(TABLET|CAPSULE|SOLUTION|INJECTION|CREAM|PATCH|SPRAY|POWDER|GEL|OINTMENT)',
+                expand=False).fillna("OTHER")
+            form_prices = (gen.groupby("dosage_type")["price"]
+                        .agg(median="median", count="count")
+                        .query("count>=5")
+                        .reset_index()
+                        .sort_values("median", ascending=False))
+            form_prices["cost_30"] = form_prices["median"] * 30
+            fig = px.bar(form_prices, x="dosage_type", y="cost_30",
                 color="cost_30", color_continuous_scale=[[0,P_GREEN],[1,MAR]],
                 title="Average 30-Day Cost by Dosage Form",
-                labels={"dosage_form":"Dosage Form","cost_30":"Avg 30-Day Cost ($)"})
+                labels={"dosage_type":"Dosage Form","cost_30":"Avg 30-Day Cost ($)"})
             fig.update_layout(**PT, height=400, coloraxis_showscale=False,
                 xaxis_tickangle=-30, margin=dict(l=40,r=20,t=50,b=100))
             st.plotly_chart(fig, use_container_width=True)
             st.markdown(info_box("Why do forms cost differently?",
                 "Injectable drugs require sterile manufacturing, cold chain logistics, and "
                 "specialized equipment — driving much higher costs than tablets. Solutions and "
-                "capsules fall between. This explains why insulin (injection) costs 100× more "
-                "per dose than metformin (tablet) even after controlling for molecule complexity.",
+                "capsules fall between.",
                 C_AMBER, P_AMBER), unsafe_allow_html=True)
         else:
             st.info("Dosage form data not available in current dataset.")
