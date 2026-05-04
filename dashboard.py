@@ -198,12 +198,12 @@ with st.sidebar:
     st.markdown("---")
     page = st.radio("Navigate", [
         "📊 Overview",
-        "😊 Sentiment Analysis",
         "💰 Drug Pricing",
         "⚠️ Drug Shortages",
         "🔬 Clinical Trials",
         "🧬 Adverse Events",
         "📚 PubMed Research",
+        "😊 Sentiment Analysis",
         "🎯 Satisfaction Predictor",
         "🔮 Shortage & Rating Prediction",
     ], label_visibility="collapsed")
